@@ -118,20 +118,20 @@
     <ClCompile Include="A05Base.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\img\bg.jpg" />
-    <Image Include="Assets\img\bgCastle.jpg" />
-    <Image Include="Assets\img\gold.png" />
-    <Image Include="Assets\img\kintoun.png" />
-    <Image Include="Assets\img\num.png" />
-    <Image Include="Assets\img\sp01.png" />
-    <Image Include="Assets\img\spCastle.png" />
+    <Image Include="..\..\res\img\bg.jpg" />
+    <Image Include="..\..\res\img\bgCastle.jpg" />
+    <Image Include="..\..\res\img\gold.png" />
+    <Image Include="..\..\res\img\kintoun.png" />
+    <Image Include="..\..\res\img\num.png" />
+    <Image Include="..\..\res\img\sp01.png" />
+    <Image Include="..\..\res\img\spCastle.png" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="Assets\au\mainTheme.mp3" />
+    <Media Include="..\..\res\au\mainTheme.mp3" />
   </ItemGroup>
   <ItemGroup>
-    <Font Include="Assets\ttf\MarioLuigi2.ttf" />
-    <Font Include="Assets\ttf\saiyan.ttf" />
+    <Font Include="..\..\res\ttf\MarioLuigi2.ttf" />
+    <Font Include="..\..\res\ttf\saiyan.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

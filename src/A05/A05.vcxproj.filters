@@ -29,38 +29,38 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\img\bg.jpg">
+    <Image Include="..\..\res\img\bg.jpg">
       <Filter>Resource Files\IMG</Filter>
     </Image>
-    <Image Include="Assets\img\bgCastle.jpg">
+    <Image Include="..\..\res\img\bgCastle.jpg">
       <Filter>Resource Files\IMG</Filter>
     </Image>
-    <Image Include="Assets\img\gold.png">
+    <Image Include="..\..\res\img\gold.png">
       <Filter>Resource Files\IMG</Filter>
     </Image>
-    <Image Include="Assets\img\kintoun.png">
+    <Image Include="..\..\res\img\kintoun.png">
       <Filter>Resource Files\IMG</Filter>
     </Image>
-    <Image Include="Assets\img\num.png">
+    <Image Include="..\..\res\img\num.png">
       <Filter>Resource Files\IMG</Filter>
     </Image>
-    <Image Include="Assets\img\sp01.png">
+    <Image Include="..\..\res\img\sp01.png">
       <Filter>Resource Files\IMG</Filter>
     </Image>
-    <Image Include="Assets\img\spCastle.png">
+    <Image Include="..\..\res\img\spCastle.png">
       <Filter>Resource Files\IMG</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="Assets\au\mainTheme.mp3">
+    <Media Include="..\..\res\au\mainTheme.mp3">
       <Filter>Resource Files\AU</Filter>
     </Media>
   </ItemGroup>
   <ItemGroup>
-    <Font Include="Assets\ttf\MarioLuigi2.ttf">
+    <Font Include="..\..\res\ttf\MarioLuigi2.ttf">
       <Filter>Resource Files\FONTS</Filter>
     </Font>
-    <Font Include="Assets\ttf\saiyan.ttf">
+    <Font Include="..\..\res\ttf\saiyan.ttf">
       <Filter>Resource Files\FONTS</Filter>
     </Font>
   </ItemGroup>
