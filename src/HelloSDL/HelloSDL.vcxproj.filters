@@ -15,10 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Activity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="A05Base.cpp">
+    <ClCompile Include="Activity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

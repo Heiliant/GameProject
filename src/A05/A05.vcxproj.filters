@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\IMG">
+      <UniqueIdentifier>{1f0bcd14-43ba-4e69-a2d1-116aa3eaba5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\AU">
+      <UniqueIdentifier>{f8727987-ca44-43a1-80dd-1ce3d237f2a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\FONTS">
+      <UniqueIdentifier>{7b313f86-972b-4696-987b-08f53122df1c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="A05Base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\img\bg.jpg">
+      <Filter>Resource Files\IMG</Filter>
+    </Image>
+    <Image Include="Assets\img\bgCastle.jpg">
+      <Filter>Resource Files\IMG</Filter>
+    </Image>
+    <Image Include="Assets\img\gold.png">
+      <Filter>Resource Files\IMG</Filter>
+    </Image>
+    <Image Include="Assets\img\kintoun.png">
+      <Filter>Resource Files\IMG</Filter>
+    </Image>
+    <Image Include="Assets\img\num.png">
+      <Filter>Resource Files\IMG</Filter>
+    </Image>
+    <Image Include="Assets\img\sp01.png">
+      <Filter>Resource Files\IMG</Filter>
+    </Image>
+    <Image Include="Assets\img\spCastle.png">
+      <Filter>Resource Files\IMG</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\au\mainTheme.mp3">
+      <Filter>Resource Files\AU</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Assets\ttf\MarioLuigi2.ttf">
+      <Filter>Resource Files\FONTS</Filter>
+    </Font>
+    <Font Include="Assets\ttf\saiyan.ttf">
+      <Filter>Resource Files\FONTS</Filter>
+    </Font>
+  </ItemGroup>
+</Project>
