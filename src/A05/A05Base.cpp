@@ -2,6 +2,8 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
+#include <time.h>
+#include <iostream>
 
 //Game general information
 #define SCREEN_WIDTH 800
@@ -36,23 +38,51 @@ int main(int, char*[]) {
 
 	SDL_Texture *playerTexture{ IMG_LoadTexture(renderer, "../../res/img/kintoun.png") };
 	if (playerTexture == nullptr) throw "No s'han pogut crear les textures";
-	SDL_Rect playerRect{ 0, 0, 350, 189 };
-	SDL_Rect playerTarget{ 0, 0, 100, 100 };
+	SDL_Rect playerRect{ 0, 0, 350/2, 189/2 };
+	SDL_Rect playerTarget{ 0, 0, 100, 100};
 
+	#define FPS 60
 
 		// --- Animated Sprite ---
+
+	playerTexture = { IMG_LoadTexture(renderer, "../../res/img/sp01.png") };
+	SDL_Rect playerRectS{ 0, 0, 256, 256 };
+	SDL_Rect playerPositionS;
+	int textWidth, textHeight, frameWidth, frameHeight;
+	SDL_QueryTexture(playerTexture, NULL, NULL, &textWidth, &textHeight);
+	frameWidth = textWidth / 6;
+	frameHeight = textHeight / 1;
+	playerPositionS.x = playerPositionS.y = 0;
+	playerRectS.x = playerRectS.y = 0;
+	playerPositionS.h = playerRectS.h = frameHeight;
+	playerPositionS.w = playerRectS.w = frameWidth;
+	int frameTime = 0;
 
 	// --- TEXT ---
 	TTF_Font *font{ TTF_OpenFont("../../res/ttf/saiyan.ttf", 80) };
 	if (font == nullptr) throw "No s'ha pogut inicialitar la font";
+
 	SDL_Surface *tmpSurf{ TTF_RenderText_Blended(font, "My first SDL game", SDL_Colour{ 244, 150, 0, 255}) };
 	if (tmpSurf == nullptr) TTF_CloseFont(font), throw "vainas";
 	SDL_Texture *textTexture{ SDL_CreateTextureFromSurface(renderer, tmpSurf) };
 	SDL_Rect textRect{ 100, 50, tmpSurf->w, tmpSurf->h };
 	SDL_FreeSurface(tmpSurf);
-	TTF_CloseFont(font);
 
-	SDL_RenderCopy(renderer, textTexture, nullptr, &textRect);
+
+	SDL_Surface *gobut = TTF_RenderText_Blended(font, "FUCKING CUNT", SDL_Colour{ 255, 0, 0, 255 });
+	if (gobut == nullptr) TTF_CloseFont(font), throw "vainas";
+	SDL_Texture *textTexture1{ SDL_CreateTextureFromSurface(renderer, gobut) };
+	SDL_Rect textRect1{ 100, 150, gobut->w, gobut->h };
+	SDL_FreeSurface(gobut);
+
+
+	SDL_Surface *stpbut{ TTF_RenderText_Blended(font, "YOU MORON", SDL_Colour{ 0, 0, 255, 255 }) };
+	if (stpbut == nullptr) TTF_CloseFont(font), throw "vainas";
+	SDL_Texture *textTexture2{ SDL_CreateTextureFromSurface(renderer, stpbut) };
+	SDL_Rect textRect2{ 100, 250, stpbut->w, stpbut->h };
+	SDL_FreeSurface(stpbut);
+
+	TTF_CloseFont(font);
 
 	// --- AUDIO ---
 	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
@@ -62,6 +92,11 @@ int main(int, char*[]) {
 	if (!soundtrack) throw"dgfasokljdfas";
 	Mix_VolumeMusic(MIX_MAX_VOLUME );
 	Mix_PlayMusic(soundtrack, -1);
+
+	// --- TIME ---
+	clock_t lastTime = clock();
+	float timeDown = 10.;
+	float deltaTime = 0;
 
 	// --- GAME LOOP ---
 	SDL_Event evnt;
@@ -73,12 +108,10 @@ int main(int, char*[]) {
 			case SDL_QUIT:		isRunning = false; break;
 			case SDL_KEYDOWN:	if (evnt.key.keysym.sym == SDLK_ESCAPE) isRunning = false; break;
 			case SDL_MOUSEMOTION: { 
-				playerRect.x = evnt.motion.x; 
-				playerRect.y = evnt.motion.y;
-
-				playerRect.x = evnt.motion.x - 50;
-				playerRect.y = evnt.motion.y - 50;
-
+				/*
+				playerTarget.x = evnt.motion.x-playerTarget.w/2;
+				playerTarget.y = evnt.motion.y-playerTarget.h/2;
+				*/
 				break; 
 			}
 			default:;
@@ -86,7 +119,27 @@ int main(int, char*[]) {
 		}
 
 		// UPDATE
-		//playerRect.x += playerTarget.x / 10;
+		playerRect.x += (playerTarget.x - playerRect.x)/ 10;
+		playerRect.y += (playerTarget.y - playerRect.y) / 10;
+
+		frameTime++;
+		if (FPS / frameTime <= 9) {
+			frameTime = 0;
+			playerRectS.x += frameWidth;
+			if (playerRectS.x >= frameWidth)
+				playerRectS.x = 0;
+		}
+		
+		deltaTime = (clock() - lastTime);
+		lastTime = clock();
+		if (timeDown > 0) {
+			timeDown -= deltaTime / 1000;
+			std::cout << timeDown << std::endl;
+		}
+		else {
+			std::cout << "ALOMOMOLA ME MOLA ME MOLA ALOMOMOLA ";
+		}
+
 		// DRAW
 		
 			//Background
@@ -95,10 +148,12 @@ int main(int, char*[]) {
 		SDL_RenderCopy(renderer, bgTexture, nullptr, &bgRect);
 		SDL_RenderCopy(renderer, playerTexture, nullptr, &playerRect);
 		SDL_RenderCopy(renderer, textTexture, nullptr, &textRect);
+		SDL_RenderCopy(renderer, textTexture1, nullptr, &textRect1);
+		SDL_RenderCopy(renderer, textTexture2, nullptr, &textRect2);
 		SDL_RenderPresent(renderer);
 			//Animated Sprite
 		SDL_RenderPresent(renderer);
-
+		SDL_RenderCopy(renderer, playerTexture, &playerRectS, &playerPositionS);
 	}
 
 	// --- DESTROY ---
