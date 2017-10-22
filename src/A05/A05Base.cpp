@@ -62,6 +62,8 @@ int main(int, char*[]) {
 	TTF_Font *font{ TTF_OpenFont("../../res/ttf/saiyan.ttf", 80) };
 	if (font == nullptr) throw "No s'ha pogut inicialitar la font";
 
+	
+
 	SDL_Surface *tmpSurf{ TTF_RenderText_Blended(font, "My first SDL game", SDL_Colour{ 244, 150, 0, 255}) };
 	if (tmpSurf == nullptr) TTF_CloseFont(font), throw "vainas";
 	SDL_Texture *textTexture{ SDL_CreateTextureFromSurface(renderer, tmpSurf) };
