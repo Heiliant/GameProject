@@ -4,6 +4,8 @@
 #include <SDL_mixer.h>
 #include <time.h>
 #include <iostream>
+#include <stdlib.h>
+
 
 const int _WIDTH = 640;
 const int _HEIGHT = 480;
@@ -29,6 +31,12 @@ coord getCenter(SDL_Rect dunno) {
 	two = dunno.y + dunno.h / 2;
 	return (coord { one, two });
 }
+
+class gold {
+public:
+	coord pos;
+	SDL_Rect goldRect;
+};
 
 int main(int, char*[]) {
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -74,6 +82,12 @@ int main(int, char*[]) {
 
 	SDL_Rect skylineRect{ 0, 0, _WIDTH, 140 };
 
+	gold initialLoot[5];
+
+	for (gold a : initialLoot) {
+		a.pos.x = rand() % (_WIDTH - a.goldRect.w);
+		a.pos.y = skylineRect.h + rand() % (_HEIGHT - a.goldRect.h);
+	}
 
 	SDL_Event evnt;
 	bool isActive=true;
@@ -220,6 +234,10 @@ int main(int, char*[]) {
 		SDL_RenderCopy(myRenderer, bgTexture, nullptr, &bgTextureRect);
 		//SDL_SetRenderDrawColor(myRenderer, 100, 230, 50, 255);
 		//SDL_RenderFillRect(myRenderer, &skylineRect);
+		SDL_SetRenderDrawColor(myRenderer, 100, 0, 200, 255);
+		for (gold a : initialLoot) {
+			SDL_RenderFillRect(myRenderer, &a.goldRect);
+		}
 		SDL_SetRenderDrawColor(myRenderer, 200, 200, 0, 255);
 		SDL_RenderFillRect(myRenderer, &pjRect);
 		
