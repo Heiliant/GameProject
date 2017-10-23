@@ -9,9 +9,13 @@
 #include <string>
 
 
+const int playerSize = 70;
+const int p1 = 0;
+const int p2 = 2;
 const int _WIDTH = 640;
 const int _HEIGHT = 480;
 const int _PJSPEED = 5;
+const int FPS = 60;
 
 enum class scenes
 {
@@ -107,15 +111,11 @@ int main(int, char*[]) {
 	SDL_Texture* goldTexture;
 	goldTexture = IMG_LoadTexture(myRenderer, "../../res/img/gold.png");
 
-		//sprites
-
-
 		//text
 	TTF_Font* saiyanFont;
 	saiyanFont = TTF_OpenFont("../../res/ttf/saiyan.ttf", 80);
 	TTF_Font* marioFont;
 	marioFont = TTF_OpenFont("../../res/ttf/MarioLuigi2.ttf", 35);
-
 
 	SDL_Surface *mySurface;
 	SDL_Colour playColour{ 0, 255, 0, 255 };
@@ -142,13 +142,48 @@ int main(int, char*[]) {
 	SDL_Texture *pointsTwo = SDL_CreateTextureFromSurface(myRenderer, mySurface);
 	SDL_Rect pointsTwoRect{ 0, mySurface->h, mySurface->w, mySurface->h };
 
+	//sprites
+	SDL_Texture* numericSprite;
+	numericSprite = IMG_LoadTexture(myRenderer, "../../res/img/num.png");
+	int frameWnum, frameHnum, textureW, textureH;
+	SDL_QueryTexture(numericSprite, NULL, NULL, &textureW, &textureH);
+
+	frameWnum = textureW / 10;
+	frameHnum = textureH / 1;
+
+	SDL_Rect numericRectOne{ 0, 0, frameWnum, frameHnum }; //el primer digit del player 1
+	SDL_Rect numericRectDrawOne{ pointsOneRect.x+pointsOneRect.w, pointsOneRect.y, 35, 35 };
+	SDL_Rect numericRectOneTwo{ 0, 0, frameWnum, frameHnum }; //el segon digit del player 1
+	SDL_Rect numericRectDrawOneTwo{ pointsOneRect.x + pointsOneRect.w+numericRectDrawOne.w, pointsOneRect.y, 35, 35 };
+
+	SDL_Rect numericRectTwo{ 0, 0, frameWnum, frameHnum }; //el primer digit del player 2
+	SDL_Rect numericRectDrawTwo{ pointsTwoRect.x + pointsTwoRect.w, pointsTwoRect.y, 35, 35 };
+	SDL_Rect numericRectTwoTwo{ 0, 0, frameWnum, frameHnum }; //el segon digit del player 2
+	SDL_Rect numericRectDrawTwoTwo{ pointsTwoRect.x + pointsTwoRect.w + numericRectDrawTwo.w, pointsTwoRect.y, 35, 35 };
+
+	SDL_Texture* playersSprite;
+	playersSprite = IMG_LoadTexture(myRenderer, "../../res/img/spCastle.png");
+	int frameWpj, frameHpj;
+	SDL_QueryTexture(playersSprite, NULL, NULL, &textureW, &textureH);
+	frameWpj = textureW / 12;
+	frameHpj = textureH / 8;
+
+	SDL_Rect pjRectimg{ 0, 0, frameWpj, frameHpj };
+	SDL_Rect rivalRectimg{ frameWpj * 3, 0, frameWpj, frameHpj };
+
+	SDL_Rect pjRect{ 0, 0, playerSize, playerSize };
+	SDL_Rect rivalRect{ 0, 0, playerSize, playerSize };
+
+	std::pair <int, int> pjSpeed, rivalSpeed;
+	pjSpeed.first = pjSpeed.second = rivalSpeed.first = rivalSpeed.second = 0;
+	float frameTimer;
+	frameTimer = 0.;
+
 	//colliders
 
 	coord pjPos{ 0, (int)(_HEIGHT*0.7) };
-	SDL_Rect pjRect{ pjPos.x, pjPos.y, 50, 50 };
-
+	
 	coord rivalPos{ _WIDTH - 50, (int)(_HEIGHT*0.7) };
-	SDL_Rect rivalRect{ rivalPos.x, rivalPos.y, 50, 50 };
 
 	SDL_Rect skylineRect{ 0, 0, _WIDTH, 140 };
 
@@ -261,33 +296,104 @@ int main(int, char*[]) {
 				break;
 			}
 		}
+		//UPDATE
 
 		SDL_GetMouseState(&x, &y);
 
 		const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
 
-		if (keyboardState[SDL_SCANCODE_UP])
-			pjPos.y -= 1 * _PJSPEED;
-		else if (keyboardState[SDL_SCANCODE_DOWN])
+		if (keyboardState[SDL_SCANCODE_UP]) {
+			pjPos.y -= 1 * _PJSPEED; 
+			pjSpeed.second = 1;
+		}
+		else if (keyboardState[SDL_SCANCODE_DOWN]) {
 			pjPos.y += 1 * _PJSPEED;
-		if (keyboardState[SDL_SCANCODE_LEFT])
+			pjSpeed.second = -1;
+		}
+		else
+			pjSpeed.second = 0;
+
+		if (keyboardState[SDL_SCANCODE_LEFT]) {
 			pjPos.x -= 1 * _PJSPEED;
-		else if (keyboardState[SDL_SCANCODE_RIGHT])
+			pjSpeed.first = -1;
+		}
+		else if (keyboardState[SDL_SCANCODE_RIGHT]) {
 			pjPos.x += 1 * _PJSPEED;
+			pjSpeed.first = 1;
+		}
+		else
+			pjSpeed.first = 0;
 
-		if (keyboardState[SDL_SCANCODE_W])
+		if (keyboardState[SDL_SCANCODE_W]) {
 			rivalPos.y -= 1 * _PJSPEED;
-		else if (keyboardState[SDL_SCANCODE_S])
+			rivalSpeed.second = 1;
+		}
+		else if (keyboardState[SDL_SCANCODE_S]) {
 			rivalPos.y += 1 * _PJSPEED;
-		if (keyboardState[SDL_SCANCODE_A])
-			rivalPos.x -= 1 * _PJSPEED;
-		else if (keyboardState[SDL_SCANCODE_D])
-			rivalPos.x += 1 * _PJSPEED;
+			rivalSpeed.second = -1;
+		}
+		else
+			rivalSpeed.second = 0;
 
-		//UPDATE
+		if (keyboardState[SDL_SCANCODE_A]) {
+			rivalPos.x -= 1 * _PJSPEED;
+			rivalSpeed.first = -1;
+		}
+		else if (keyboardState[SDL_SCANCODE_D]) {
+			rivalPos.x += 1 * _PJSPEED;
+			rivalSpeed.first = 1;
+		}
+		else
+			rivalSpeed.first = 0;
+		
 		deltaTime = clock() - lastTime;
 		lastTime = clock();
 		
+		frameTimer += deltaTime*0.01f;
+		if (frameTimer >= 3)
+			frameTimer = 0;
+
+			//ANIMATIONS
+		if (pjSpeed.first > 0) {
+			pjRectimg.y = frameHpj * 2;
+		}
+		else if(pjSpeed.first < 0){
+			pjRectimg.y = frameHpj;
+		}
+		if (pjSpeed.second > 0) {
+			pjRectimg.y = frameHpj * 3;
+		}
+		else if (pjSpeed.second < 0) {
+			pjRectimg.y = frameHpj * 0;
+		}
+
+		if (pjSpeed.first == 0 && pjSpeed.second == 0) {
+			pjRectimg.x = frameWpj;
+		}
+		else {
+			pjRectimg.x = (int)frameTimer*frameWpj;
+		}
+
+		if (rivalSpeed.first > 0) {
+			rivalRectimg.y = frameHpj * 2;
+		}
+		else if (rivalSpeed.first < 0) {
+			rivalRectimg.y = frameHpj;
+		}
+		if (rivalSpeed.second > 0) {
+			rivalRectimg.y = frameHpj * 3;
+		}
+		else if (rivalSpeed.second < 0) {
+			rivalRectimg.y = frameHpj * 0;
+		}
+
+		if (rivalSpeed.first == 0 && rivalSpeed.second == 0) {
+			rivalRectimg.x = frameWpj*3;
+		}
+		else {
+			rivalRectimg.x = ((int)frameTimer*frameWpj) + frameWpj * 3;
+		}
+
 			//TIMER
 		countDown -= deltaTime / 1000;
 		std::string min(std::to_string((int)countDown / 60));
@@ -342,9 +448,16 @@ int main(int, char*[]) {
 		rivalRect.x = rivalPos.x;
 		rivalRect.y = rivalPos.y;
 
+		numericRectOne.x = ((scoreOne - scoreOne % 10) / 10)%10* frameWnum;
+		numericRectOneTwo.x = (scoreOne % 10)*frameWnum;
+
+		numericRectTwo.x = ((scoreTwo - scoreTwo % 10) / 10) % 10 * frameWnum;
+		numericRectTwoTwo.x = (scoreTwo % 10)*frameWnum;
+
 		//WIN CONDITION
 		if (countDown <= 0) {
 			if(scoreOne > scoreTwo){
+
 			}
 			else if(scoreTwo > scoreOne){
 			}
@@ -363,10 +476,14 @@ int main(int, char*[]) {
 		SDL_RenderCopy(myRenderer, timerTexture, nullptr, &timerRect);
 		SDL_RenderCopy(myRenderer, pointsOne, nullptr, &pointsOneRect);
 		SDL_RenderCopy(myRenderer, pointsTwo, nullptr, &pointsTwoRect);
-		SDL_SetRenderDrawColor(myRenderer, 200, 200, 0, 255);
-		SDL_RenderFillRect(myRenderer, &pjRect);
-		SDL_SetRenderDrawColor(myRenderer, 200, 0, 0, 255);
-		SDL_RenderFillRect(myRenderer, &rivalRect);
+
+		SDL_RenderCopy(myRenderer, numericSprite, &numericRectOne, &numericRectDrawOne);
+		SDL_RenderCopy(myRenderer, numericSprite, &numericRectOneTwo, &numericRectDrawOneTwo);
+		SDL_RenderCopy(myRenderer, numericSprite, &numericRectTwo, &numericRectDrawTwo);
+		SDL_RenderCopy(myRenderer, numericSprite, &numericRectTwoTwo, &numericRectDrawTwoTwo);
+
+		SDL_RenderCopy(myRenderer, playersSprite, &pjRectimg, &pjRect);
+		SDL_RenderCopy(myRenderer, playersSprite, &rivalRectimg, &rivalRect);
 		
 		break;
 		}
