@@ -206,7 +206,7 @@ int main(int, char*[]) {
 	scenes myScene = scenes::_menu;
 	unsigned int scoreOne, scoreTwo;
 	scoreOne = scoreTwo = 0;
-	float countDown = 90.;
+	float countDown = 10.;
 
 	float deltaTime, lastTime;
 	deltaTime = 0;
@@ -457,12 +457,15 @@ int main(int, char*[]) {
 		//WIN CONDITION
 		if (countDown <= 0) {
 			if(scoreOne > scoreTwo){
-
+				std::cout << "Ha ganado el player 1" << std::endl;
 			}
 			else if(scoreTwo > scoreOne){
+				std::cout << "Ha ganado el player 2" << std::endl;
 			}
 			else {
+				std::cout << "Habéis empatado!" << std::endl;
 			}
+			isActive = false;
 		}
 
 		//DRAW
@@ -489,6 +492,9 @@ int main(int, char*[]) {
 		}
 		SDL_RenderPresent(myRenderer);
 	}
+	char end;
+	std::cout << "Press a letter + return to end the program" << std::endl;
+	std::cin >> end;
 	return 0;
 }
 	
