@@ -8,7 +8,7 @@
 #include <deque>
 #include <string>
 
-
+float countDown = 30.;
 const int playerSize = 70;
 const int p1 = 0;
 const int p2 = 2;
@@ -132,6 +132,7 @@ int main(int, char*[]) {
 	TTF_CloseFont(saiyanFont);
 
 	SDL_Colour timerColour{ 230, 0, 0, 255 };
+	SDL_Texture *timerTexture=nullptr;
 	
 	SDL_Colour scoreColour{ 0, 0, 0, 255 };
 	mySurface = TTF_RenderText_Blended(marioFont, "Pl 1:", scoreColour);
@@ -206,7 +207,6 @@ int main(int, char*[]) {
 	scenes myScene = scenes::_menu;
 	unsigned int scoreOne, scoreTwo;
 	scoreOne = scoreTwo = 0;
-	float countDown = 10.;
 
 	float deltaTime, lastTime;
 	deltaTime = 0;
@@ -388,7 +388,7 @@ int main(int, char*[]) {
 		}
 
 		if (rivalSpeed.first == 0 && rivalSpeed.second == 0) {
-			rivalRectimg.x = frameWpj*3;
+			rivalRectimg.x = frameWpj*3 + frameWpj;
 		}
 		else {
 			rivalRectimg.x = ((int)frameTimer*frameWpj) + frameWpj * 3;
@@ -406,7 +406,7 @@ int main(int, char*[]) {
 
 		std::string a(min + ":" + seg);
 		mySurface = TTF_RenderText_Blended(marioFont, a.c_str(), timerColour);
-		SDL_Texture *timerTexture = SDL_CreateTextureFromSurface(myRenderer, mySurface);
+		timerTexture = SDL_CreateTextureFromSurface(myRenderer, mySurface);
 		SDL_Rect timerRect{ _WIDTH - mySurface->w, 0, mySurface->w, mySurface->h };
 		
 			//collision check and spacial correction
@@ -492,6 +492,29 @@ int main(int, char*[]) {
 		}
 		SDL_RenderPresent(myRenderer);
 	}
+
+	//DESTROYS
+		//menu
+	SDL_DestroyTexture(menuTexture);
+	SDL_DestroyTexture(playTexture);
+	SDL_DestroyTexture(exitTexture);
+		//menu
+	SDL_DestroyTexture(bgTexture);
+	SDL_DestroyTexture(timerTexture);
+	SDL_DestroyTexture(pointsOne);
+	SDL_DestroyTexture(pointsTwo);
+	SDL_DestroyTexture(numericSprite);
+	SDL_DestroyTexture(playersSprite);
+	for (int i = 0; i < initialLoot.size(); ++i) {
+		initialLoot.erase(initialLoot.begin() + i);
+	}
+
+	SDL_DestroyRenderer(myRenderer);
+	SDL_DestroyWindow(myWindow);
+
+	IMG_Quit();
+	SDL_Quit();
+
 	char end;
 	std::cout << "Press a letter + return to end the program" << std::endl;
 	std::cin >> end;
