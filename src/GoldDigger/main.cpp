@@ -92,6 +92,8 @@ int main(int, char*[]) {
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 	TTF_Init();
+	const Uint8 mixFlags{ MIX_INIT_MP3 | MIX_INIT_OGG };
+	Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024);
 	//STARTUP
 		//window
 	SDL_Window* myWindow;
@@ -110,6 +112,11 @@ int main(int, char*[]) {
 
 	SDL_Texture* goldTexture;
 	goldTexture = IMG_LoadTexture(myRenderer, "../../res/img/gold.png");
+
+		//audio
+	Mix_Music *soundtrack{ Mix_LoadMUS("../../res/au/initialD.mp3") };
+	Mix_VolumeMusic(MIX_MAX_VOLUME);
+	Mix_PlayMusic(soundtrack, -1);
 
 		//text
 	TTF_Font* saiyanFont;
@@ -512,6 +519,7 @@ int main(int, char*[]) {
 	SDL_DestroyRenderer(myRenderer);
 	SDL_DestroyWindow(myWindow);
 
+	Mix_Quit();
 	IMG_Quit();
 	SDL_Quit();
 
