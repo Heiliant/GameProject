@@ -87,7 +87,7 @@ void avoidFlee(SDL_Rect &a, coord &dir) {
 		dir.y += (_HEIGHT - (a.y + a.h));
 }
 
-int main(int, char*[]) {
+int main2(int, char*[]) {
 	srand(time(nullptr));
 
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -492,8 +492,8 @@ int main(int, char*[]) {
 		SDL_RenderCopy(myRenderer, numericSprite, &numericRectTwo, &numericRectDrawTwo);
 		SDL_RenderCopy(myRenderer, numericSprite, &numericRectTwoTwo, &numericRectDrawTwoTwo);
 
-		SDL_RenderCopy(myRenderer, playersSprite, &pjRectimg, &pjRect);
-		SDL_RenderCopy(myRenderer, playersSprite, &rivalRectimg, &rivalRect);
+		SDL_RenderCopyEx(myRenderer, playersSprite, &pjRectimg, &pjRect, 0.0, NULL, SDL_RendererFlip::SDL_FLIP_NONE);
+		//SDL_RenderCopy(myRenderer, playersSprite, &rivalRectimg, &rivalRect);
 		
 		break;
 		}
