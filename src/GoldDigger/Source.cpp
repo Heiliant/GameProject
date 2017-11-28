@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-int main(int, char*[]) {
+int main2(int, char*[]) {
 	while(1);
 	
 }

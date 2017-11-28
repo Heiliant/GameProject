@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<enemy name="alghul">
+		<hp>670</hp>
+		<atk>1700</atk>
+		<def>1000</def>
+		<freq>1.8</freq>
+		<exp>625</exp>
+	</enemy>
+	<enemy name="ghul">
+		<hp>600</hp>
+		<atk>500</atk>
+		<def>620</def>
+		<freq>1.1</freq>
+		<exp>125</exp>
+	</enemy>
+	<enemy name="demonibestia">
+		<hp>5000</hp>
+		<atk>2500</atk>
+		<def>3000</def>
+		<freq>0.65</freq>
+		<exp>2025</exp>
+	</enemy>
+	<enemy name="fleder">
+		<hp>2000</hp>
+		<atk>3000</atk>
+		<def>1000</def>
+		<freq>2</freq>
+		<exp>1125</exp>
+	</enemy>
+	<enemy name="leshen">
+		<hp>7000</hp>
+		<atk>1500</atk>
+		<def>3000</def>
+		<freq>1.1</freq>
+		<exp>2350</exp>
+	</enemy>
+</root>

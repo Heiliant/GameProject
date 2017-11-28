@@ -87,7 +87,7 @@ void avoidFlee(SDL_Rect &a, coord &dir) {
 		dir.y += (_HEIGHT - (a.y + a.h));
 }
 
-int main2(int, char*[]) {
+int main(int, char*[]) {
 	srand(time(nullptr));
 
 	SDL_Init(SDL_INIT_EVERYTHING);

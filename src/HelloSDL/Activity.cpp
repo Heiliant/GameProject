@@ -27,7 +27,7 @@ void randomColor(SDL_Color &col) {
 	//TO DO
 }
 
-int main(int argc, char *argv[]) {
+int main2(int argc, char *argv[]) {
 	SDL_Window* window = SDL_CreateWindow("Hello SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
